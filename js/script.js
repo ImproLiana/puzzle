@@ -55,61 +55,65 @@ imlist.forEach(element => {
     return false;
   }
 
-  element.image.addEventListener('mousedown', (event) => {
+  element.image.addEventListener('touchstart', (event) => {
     element.isMouseDown = true;
     element.startX = event.pageX - element.image.offsetLeft;
     element.startY = event.pageY - element.image.offsetTop;
-  });
-  
-  element.image.addEventListener('mouseup', () => {
-    element.isMouseDown = false;
-    table.forEach(td => {
-      const tdRect = td.getBoundingClientRect()
-      if (isTouch(tdRect)) {
-        if (td.children.length == 0){
-          element.image.classList.remove(element.image.id)
-          element.image.style.left = tdRect.x + 'px'
-          element.image.style.top = tdRect.y + 'px'
-          element.image.style.position = 'static'
-          td.appendChild(element.image);
-        }else{
-          // console.log(td.children[0])
-          td.children[0].style.left = null
-          td.children[0].style.top = null
-          td.children[0].style.position = null
-          td.children[0].classList.add(td.children[0].id)
-          let delet = td.children[0]
-          td.children[0].remove()
-          div.appendChild(delet)
-          element.image.classList.remove(element.image.id)
-          element.image.style.left = tdRect.x + 'px'
-          element.image.style.top = tdRect.y + 'px'
-          element.image.style.position = 'static'
-          td.appendChild(element.image)};
-        }}
-      )
-      
-    if (done()){
-      confirm('Поздравляю вы собрали пазл!')
-    }})
+    console.log('touch')
 
-  document.addEventListener('mousemove', (event) => {
-    if (element.isMouseDown) {
-      element.image.style.left = event.pageX - element.startX + 'px';
-      element.image.style.top = event.pageY - element.startY + 'px';
-
+    element.image.addEventListener('touchend', () => {
+      console.log('touchend')
+      element.isMouseDown = false;
       table.forEach(td => {
         const tdRect = td.getBoundingClientRect()
-        // console.log(tdRect);
         if (isTouch(tdRect)) {
-          td.style.backgroundColor = 'rgb(201, 174, 255)'
-        }
-        else{
-          td.style.backgroundColor = 'rgb(227, 213, 255)'
+          if (td.children.length == 0){
+            element.image.classList.remove(element.image.id)
+            element.image.style.left = tdRect.x + 'px'
+            element.image.style.top = tdRect.y + 'px'
+            element.image.style.position = 'static'
+            td.appendChild(element.image);
+          }else{
+            // console.log(td.children[0])
+            td.children[0].style.left = null
+            td.children[0].style.top = null
+            td.children[0].style.position = null
+            td.children[0].classList.add(td.children[0].id)
+            let delet = td.children[0]
+            td.children[0].remove()
+            div.appendChild(delet)
+            element.image.classList.remove(element.image.id)
+            element.image.style.left = tdRect.x + 'px'
+            element.image.style.top = tdRect.y + 'px'
+            element.image.style.position = 'static'
+            td.appendChild(element.image)};
+          }}
+        )
+        
+      if (done()){
+        confirm('Поздравляю вы собрали пазл!')
+      }})
+      document.addEventListener('touchmove', (event) => {
+        if (element.isMouseDown) {
+          console.log('touchmove')
+          element.image.style.left = event.pageX - element.startX + 'px';
+          element.image.style.top = event.pageY - element.startY + 'px';
+    
+          table.forEach(td => {
+            const tdRect = td.getBoundingClientRect()
+            // console.log(tdRect);
+            if (isTouch(tdRect)) {
+              td.style.backgroundColor = 'rgb(201, 174, 255)'
+            }
+            else{
+              td.style.backgroundColor = 'rgb(227, 213, 255)'
+            }
+          });
         }
       });
-    }
   });
+  
+
 
   element.image.ondragstart = function() {
     return false;

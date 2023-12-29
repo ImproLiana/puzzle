@@ -94,6 +94,7 @@ imlist.forEach(element => {
         confirm('Поздравляю вы собрали пазл!')
       }})
       document.addEventListener('touchmove', (event) => {
+        event.preventDefault();
         if (element.isMouseDown) {
           console.log('touchmove')
           element.image.style.left = event.pageX - element.startX + 'px';

@@ -57,8 +57,8 @@ imlist.forEach(element => {
 
   element.image.addEventListener('touchstart', (event) => {
     element.isMouseDown = true;
-    element.startX = event.pageX - element.image.offsetLeft;
-    element.startY = event.pageY - element.image.offsetTop;
+    element.startX = event.touches[0].pageX - element.image.offsetLeft;
+    element.startY = event.touches[0].pageY - element.image.offsetTop;
     console.log('touch')
   });
 
@@ -99,8 +99,8 @@ imlist.forEach(element => {
     event.preventDefault();
     if (element.isMouseDown) {
       console.log('touchmove')
-      element.image.style.left = event.pageX - element.startX + 'px';
-      element.image.style.top = event.pageY - element.startY + 'px';
+      element.image.style.left = event.touches[0].pageX - element.startX + 'px';
+      element.image.style.top = event.touches[0].pageY - element.startY + 'px';
     
       table.forEach(td => {
         const tdRect = td.getBoundingClientRect()

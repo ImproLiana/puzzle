@@ -60,8 +60,9 @@ imlist.forEach(element => {
     element.startX = event.pageX - element.image.offsetLeft;
     element.startY = event.pageY - element.image.offsetTop;
     console.log('touch')
+  });
 
-    element.image.addEventListener('touchend', () => {
+  element.image.addEventListener('touchend', () => {
       console.log('touchend')
       element.isMouseDown = false;
       table.forEach(td => {
@@ -89,32 +90,30 @@ imlist.forEach(element => {
             td.appendChild(element.image)};
           }}
         )
-        
-      if (done()){
-        confirm('Поздравляю вы собрали пазл!')
-      }})
-      document.addEventListener('touchmove', (event) => {
-        event.preventDefault();
-        if (element.isMouseDown) {
-          console.log('touchmove')
-          element.image.style.left = event.pageX - element.startX + 'px';
-          element.image.style.top = event.pageY - element.startY + 'px';
+    if (done()){
+      confirm('Поздравляю вы собрали пазл!')
+    }
+  });
+
+  document.addEventListener('touchmove', (event) => {
+    event.preventDefault();
+    if (element.isMouseDown) {
+      console.log('touchmove')
+      element.image.style.left = event.pageX - element.startX + 'px';
+      element.image.style.top = event.pageY - element.startY + 'px';
     
-          table.forEach(td => {
-            const tdRect = td.getBoundingClientRect()
+      table.forEach(td => {
+        const tdRect = td.getBoundingClientRect()
             // console.log(tdRect);
-            if (isTouch(tdRect)) {
-              td.style.backgroundColor = 'rgb(201, 174, 255)'
-            }
-            else{
-              td.style.backgroundColor = 'rgb(227, 213, 255)'
-            }
-          });
+        if (isTouch(tdRect)) {
+          td.style.backgroundColor = 'rgb(201, 174, 255)'
+        }
+        else{
+          td.style.backgroundColor = 'rgb(227, 213, 255)'
         }
       });
-  });
-  
-
+    }
+  }, {passive: false});
 
   element.image.ondragstart = function() {
     return false;
